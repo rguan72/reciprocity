@@ -1,0 +1,19 @@
+[project]
+name = "ukaisi"
+version = "0.1.0"
+description = ""
+requires-python = ">=3.10"
+dependencies = [
+    "petri",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["ukaisi"]
+
+[tool.uv.sources]
+petri = { git = "https://github.com/safety-research/petri" }
+
