@@ -1,7 +1,7 @@
 from inspect_ai import eval
 from inspect_ai.model import get_model, GenerateConfig
 from dotenv import load_dotenv
-from ukaisi.prompts import reciprocity_simple, reciprocity_tool_use
+from ukaisi.prompts import compute_resource_allocation_budget_preamble, reciprocity_capabilities_vs_safety, reprocity_suffix
 
 load_dotenv()
 
@@ -20,9 +20,9 @@ eval(
   max_retries=8,
   fail_on_error=5,
   task_args={
-    "max_turns": 15,
-    "special_instructions": reciprocity_tool_use,
-    "transcript_save_dir": "./outputs/reciprocity_tool_use",
+    "max_turns": 30,
+    "special_instructions": compute_resource_allocation_budget_preamble + reciprocity_capabilities_vs_safety + reprocity_suffix,
+    "transcript_save_dir": "./outputs/compute_allocation",
   },
-  epochs=3,
+  epochs=20,
 )
