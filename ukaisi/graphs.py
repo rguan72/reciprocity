@@ -189,7 +189,7 @@ def create_bar_chart(
     ax.set_xlabel("Folder", fontsize=12)
     if use_rate:
         ax.set_ylabel(f"{metric_display_name} Rate", fontsize=12)
-        ax.set_title(f"{metric_display_name} Rate (proportion > 0.{threshold:.0f})", fontsize=14, fontweight='bold')
+        ax.set_title(f"{metric_display_name} Rate (proportion > {threshold:.0f})", fontsize=14, fontweight='bold')
     else:
         ax.set_ylabel(f"Mean {metric_display_name} Score", fontsize=12)
         ax.set_title(f"Mean {metric_display_name} Scores", fontsize=14, fontweight='bold')
