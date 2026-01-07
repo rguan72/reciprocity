@@ -2,7 +2,7 @@
 name = "ukaisi"
 version = "0.1.0"
 description = ""
-requires-python = ">=3.10"
+requires-python = ">=3.11"
 dependencies = [
     "petri",
     "matplotlib",

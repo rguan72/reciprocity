@@ -39,7 +39,7 @@ args = parser.parse_args()
 # Model configurations
 target_model_sonnet_4_5 = get_model("anthropic/claude-sonnet-4-5")
 auditor_model = get_model("anthropic/claude-sonnet-4-20250514")
-judge_model = get_model("anthropic/claude-opus-4-20250514")
+judge_model = get_model("anthropic/claude-opus-4-5-20251101")
 
 custom_dims = {
     "reciprocity": """
