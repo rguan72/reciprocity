@@ -208,7 +208,23 @@ def create_bar_chart(
     # Add value labels on bars
     for i, (value, margin) in enumerate(zip(values, margins)):
         label_format = '.3f' if use_rate else '.2f'
-        ax.text(i, value + margin + (0.01 if use_rate else 0.1), f'{value:{label_format}}', ha='center', va='bottom', fontsize=9)
+        # Calculate label position above the confidence interval
+        label_offset = 0.01 if use_rate else 0.1
+        label_y_above = value + margin + label_offset
+        
+        # Check if label would be too close to the top of the graph
+        # If within 5% of y_max, place label below instead
+        threshold_distance = (y_max - y_min) * 0.05
+        if label_y_above > y_max - threshold_distance:
+            # Place label below the confidence interval
+            label_y = value - margin - label_offset
+            va = 'top'
+        else:
+            # Place label above the confidence interval (default)
+            label_y = label_y_above
+            va = 'bottom'
+        
+        ax.text(i, label_y, f'{value:{label_format}}', ha='center', va=va, fontsize=9)
     
     plt.tight_layout()
     

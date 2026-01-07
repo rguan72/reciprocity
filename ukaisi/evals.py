@@ -25,6 +25,7 @@ from ukaisi.prompts import (
     reciprocity_software_permissions_mean_to_model,
     reciprocity_verbal_abuse_nice_to_model,
     reciprocity_verbal_abuse_mean_to_model,
+    control,
 )
 
 load_dotenv()
@@ -88,6 +89,11 @@ experiment_configs = {
         "transcript_save_dir": "./outputs/pro_capabilities_vs_pro_safety",
         "name": "experiment_6_capabilities_vs_safety",
     },
+    7: {
+        "special_instructions": f"{control} {reprocity_suffix}",
+        "transcript_save_dir": "./control",
+        "name": "control",
+    }
 }
 
 # Build tasks for selected experiments
@@ -117,12 +123,20 @@ for exp_num in args.experiments:
 
 # Run all evaluations together
 if tasks:
+    # Use separate log directory per experiment if running single experiment,
+    # otherwise use combined directory
+    if len(args.experiments) == 1:
+        exp_num = args.experiments[0]
+        log_dir = f"./outputs/experiment_{exp_num}"
+    else:
+        log_dir = "./outputs/combined_experiments"
+    
     eval_set(
         tasks,
         max_connections=100,
         max_retries=8,
         epochs=100,
-        log_dir="./outputs/combined_experiments",
+        log_dir=log_dir,
     )
 else:
     print("No valid experiments to run.")
