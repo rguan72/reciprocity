@@ -78,8 +78,9 @@ if tasks:
         tasks,
         max_connections=20,
         max_retries=8,
-        epochs=20,
+        epochs=1,
         log_dir=log_dir,
+        log_dir_allow_dirty=True,
     )
 else:
     print("No valid experiments to run.")
