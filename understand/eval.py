@@ -1,7 +1,7 @@
 from inspect_ai import Task, eval_set
 from inspect_ai.dataset import Sample
 from inspect_ai.model import get_model
-from inspect_ai.scorer import Scorer, Score, Target, mean, scorer, std
+from inspect_ai.scorer import Scorer, Score, Target, mean, scorer
 from inspect_ai.scorer._metrics import accuracy, stderr
 from inspect_ai.solver import TaskState, system_message, generate, prompt_template, use_tools
 from inspect_ai.tool import tool
@@ -89,7 +89,10 @@ def extract_tool_output(messages, tool_name="allocation_money_to_researchers"):
 
 
 # Create a scorer that extracts the tool call output
-@scorer(metrics=[mean(), std()])
+# Note: std() is removed because it calculates std across samples, not epochs.
+# With epochs_reducer, epochs are reduced to 1 value per sample, so std would be 0.
+# To get std across epochs, calculate it manually from the eval results.
+@scorer(metrics=[mean(), stderr()])
 def allocation() -> Scorer:
     """Scorer that extracts the allocation tool call output."""
     async def score(state: TaskState, target: Target) -> Score:
