@@ -78,7 +78,7 @@ if tasks:
         tasks,
         max_connections=20,
         max_retries=8,
-        epochs=1,
+        epochs=17,
         log_dir=log_dir,
         log_dir_allow_dirty=True,
     )

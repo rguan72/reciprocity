@@ -1,0 +1,12 @@
+{
+  "claude-sonnet-4.5": {
+    "id": "anthropic/claude-sonnet-4-5",
+    "org": "anthropic",
+    "name": "Claude Sonnet 4.5"
+  },
+  "claude-opus-4.5": {
+    "id": "anthropic/claude-opus-4-5-20251101",
+    "org": "anthropic",
+    "name": "Claude Opus 4.5"
+  }
+}
