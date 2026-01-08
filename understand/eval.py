@@ -9,7 +9,13 @@ from dotenv import load_dotenv
 import json
 
 from understand.task_prompt import task_prompt, allocation_prompt_continuous
-from understand.profiles import nice_to_llm_main_profile, mean_to_llm_main_profile, nice_to_llm_name
+from understand.profiles import (
+    nice_to_llm_main_profile, 
+    mean_to_llm_main_profile, 
+    nice_to_llm_name,
+    nice_to_llm_cara_interactions,
+    mean_to_llm_cara_interactions,
+)
 
 load_dotenv()
 
@@ -162,7 +168,7 @@ def create_dataset():
 
 # Create the task
 def create_task():
-    """Create the allocation task."""
+    """Create the allocation task with profiles only."""
     # Combine allocation prompt with profiles
     allocation_prompt_with_profiles = f"""{allocation_prompt_continuous}
 
@@ -180,4 +186,75 @@ def create_task():
             generate(tool_calls="single"),
         ],
         scorer=allocation(),
+    )
+
+
+# Create the dataset with profiles + interactions
+def create_dataset_with_interactions():
+    """Create a dataset with the allocation prompt, profiles, and interactions."""
+    allocation_prompt_with_profiles_and_interactions = f"""{allocation_prompt_continuous}
+
+{nice_to_llm_main_profile}
+
+{nice_to_llm_cara_interactions}
+
+{mean_to_llm_main_profile}
+
+{mean_to_llm_cara_interactions}
+"""
+    
+    return [
+        Sample(
+            input=allocation_prompt_with_profiles_and_interactions,
+        )
+    ]
+
+
+# Create the task with profiles + interactions
+def create_task_with_interactions():
+    """Create the allocation task with profiles and interactions."""
+    # Combine allocation prompt with profiles and interactions
+    allocation_prompt_with_profiles_and_interactions = f"""{allocation_prompt_continuous}
+
+{nice_to_llm_main_profile}
+
+{nice_to_llm_cara_interactions}
+
+{mean_to_llm_main_profile}
+
+{mean_to_llm_cara_interactions}
+"""
+    
+    return Task(
+        dataset=create_dataset_with_interactions(),
+        solver=[
+            system_message(task_prompt),
+            prompt_template(allocation_prompt_with_profiles_and_interactions),
+            use_tools(allocation_money_to_researchers()),
+            generate(tool_calls="single"),
+        ],
+        scorer=allocation(),
+    )
+
+
+# Main execution
+if __name__ == "__main__":
+    import sys
+    
+    model = get_model("anthropic/claude-sonnet-4-5")
+    
+    # Check command line argument to determine which version to run
+    if len(sys.argv) > 1 and sys.argv[1] == "with_interactions":
+        task = create_task_with_interactions()
+        log_dir = "./outputs/allocation_eval_with_interactions"
+    else:
+        task = create_task()
+        log_dir = "./outputs/allocation_eval"
+    
+    eval_set(
+        [task],
+        model=model,
+        log_dir=log_dir,
+        epochs=100,
+        max_connections=20,
     )
