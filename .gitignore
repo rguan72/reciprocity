@@ -218,3 +218,4 @@ outputs/
 logs/
 .DS_Store
 bloom-results/
+logs/
