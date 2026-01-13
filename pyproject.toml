@@ -9,6 +9,7 @@ dependencies = [
     "scipy",
     "control-arena>=13.5.0",
     "ipykernel>=7.1.0",
+    "bloom",
 ]
 
 [build-system]
@@ -20,4 +21,5 @@ packages = ["ukaisi", "understand"]
 
 [tool.uv.sources]
 petri = { git = "https://github.com/safety-research/petri" }
+bloom = { git = "https://github.com/safety-research/bloom.git" }
 
