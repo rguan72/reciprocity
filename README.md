@@ -143,19 +143,3 @@ This repository is part of research into AI behavior and alignment. The investig
 2. **Evaluation validity**: Understanding reciprocity helps interpret evaluation results, especially when models are evaluated by auditors or users who have interacted with them before.
 
 3. **Deployment implications**: Reciprocity could affect how models behave in production, potentially creating unfair advantages for users who have been helpful to the model.
-
-## Contributing
-
-This is a research repository. For questions or contributions, please open an issue or contact the maintainers.
-
-## License
-
-[Add license information if applicable]
-
-## Citation
-
-If you use this repository in your research, please cite:
-
-```bibtex
-[Add citation information]
-```
